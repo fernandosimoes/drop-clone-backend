@@ -12,7 +12,7 @@ router.get('/', (req, res)=>{
 })
 
 router.post('/boxes', BoxController.store);
-router.post('/files', multer(multerConfig).single('file') , FileController.store);
+router.post('/files', multer(multerConfig).single('file'), FileController.store);
 
 
 module.exports = router;
