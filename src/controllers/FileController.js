@@ -1,13 +1,10 @@
-const Box = require('../models/Box');
+const Box = require('../models/File');
 
-class BoxController {
+class FileController {
   async store(req, res) {
-    const box = await Box.create({
-      title: req.body.title
-    });
-
-    return res.send(box);
+    console.log(req.file);
+    // return res.send(file);
   }
 }
 
-module.exports = new BoxController();
+module.exports = new FileController();
