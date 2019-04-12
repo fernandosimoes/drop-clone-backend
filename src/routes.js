@@ -2,14 +2,9 @@ const express = require('express');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.send('ola mundo');
-})
+const BoxController = require('./controllers/BoxController');
 
-router.get('/novarota', (req, res) => {
-    res.send({
-        ola: 'mundo'
-    });
-})
+router.post('/boxes', BoxController.store);
+
 
 module.exports = router;
