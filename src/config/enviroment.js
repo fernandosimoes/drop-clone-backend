@@ -1,6 +1,6 @@
 const enviroment = {
-  url: process.env.url || 'http://localhost:1000',
-  port: process.env.port || '1000'
+  url: process.env.URL || 'http://localhost:1000',
+  port: process.env.PORT || '1000'
 }
 
 module.exports = enviroment;
