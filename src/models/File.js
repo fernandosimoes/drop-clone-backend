@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const enviroment = require('../config/enviroment');
 
 const File = new mongoose.Schema({
     title: {
@@ -16,7 +17,7 @@ const File = new mongoose.Schema({
 });
 
 File.virtual('url').get(function virtualUrl(params) {
-    return `http://localhost:1000/files/${encodeURIComponent(this.path)}`
+    return `${enviroment.url}/files/${encodeURIComponent(this.path)}`
 });
 
 module.exports = mongoose.model('File', File);

@@ -5,6 +5,8 @@ const app = express();
 const cors = require('cors');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+const enviroment = require('./config/enviroment');
+
 
 app.use(cors());
 
@@ -32,4 +34,4 @@ app.use(express.urlencoded({extended: true}));
 app.use('/files', express.static(path.resolve(__dirname, '..', 'temp')));
 app.use(require('./routes'));
 
-app.listen(1000);
+app.listen(enviroment.port || 1000);
