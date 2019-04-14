@@ -8,6 +8,16 @@ class BoxController {
 
     return res.send(box);
   }
+
+  async show(req, res) {
+    const boxlist = await Box.findById(req.params.id).populate({
+      path:'files',
+      options: {
+        sort: { createdAt: -1 }
+      }
+    });
+    res.json(boxlist);
+  }
 }
 
 module.exports = new BoxController();

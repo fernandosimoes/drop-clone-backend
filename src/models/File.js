@@ -10,7 +10,13 @@ const File = new mongoose.Schema({
         type: String
     },
 },{
-    timestamps: true
+    timestamps: true,
+    toObject: { virtuals: true },
+    toJSON: { virtuals: true }
+});
+
+File.virtual('url').get(function virtualUrl(params) {
+    return `http://localhost:1000/files/${encodeURIComponent(this.path)}`
 });
 
 module.exports = mongoose.model('File', File);
