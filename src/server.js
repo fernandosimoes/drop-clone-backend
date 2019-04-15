@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
 const cors = require("cors");
-
+const enviroment = require('./config/enviroment')
 const app = express();
 
 app.use(cors);
