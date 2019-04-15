@@ -1,20 +1,21 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const path = require("path");
-const cors = require("cors");
-const enviroment = require('./config/enviroment')
+const express = require('express');
+const mongoose = require('mongoose');
+const path = require('path');
 const app = express();
+const cors = require('cors');
+const enviroment = require('./config/enviroment');
 
-app.use(cors);
+app.use(cors());
 
-const server = require("http").Server(app);
-const io = require("socket.io")(server);
+const server = require('http').Server(app);
+const io = require('socket.io')(server)
 
-io.on("connection", socket => {
-  socket.on("connectRoom", box => {
-    socket.join(box);
-  });
-});
+io.on('connection', socket => {
+    console.log('websocket conectado');
+    socket.on('connectRoom', box => {
+        socket.join(box);
+    })
+})
 
 mongoose.connect(
     'mongodb+srv://oministack:oministack@cluster0-gglfc.mongodb.net/oministack?retryWrites=true',
@@ -24,15 +25,13 @@ mongoose.connect(
 );
 
 app.use((req, res, next) => {
-  req.io = io;
-  return next();
-});
+    req.io = io;
+    return next();
+})
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use("/files", express.static(path.resolve(__dirname, "..", "tmp")));
+app.use(express.urlencoded({extended: true}));
+app.use('/files', express.static(path.resolve(__dirname, '..', 'temp')));
+app.use(require('./routes'));
 
-app.use(require("./routes"));
-
-app.listen(enviroment.port || 3333);
-
+app.listen(enviroment.port || 1000);
