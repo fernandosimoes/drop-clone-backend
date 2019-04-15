@@ -7,16 +7,6 @@ const enviroment = require('./config/enviroment');
 
 app.use(cors());
 
-const server = require('http').Server(app);
-const io = require('socket.io')(server)
-
-io.on('connection', socket => {
-    console.log('websocket conectado');
-    socket.on('connectRoom', box => {
-        socket.join(box);
-    })
-})
-
 mongoose.connect(
     'mongodb+srv://oministack:oministack@cluster0-gglfc.mongodb.net/oministack?retryWrites=true',
     {
@@ -34,4 +24,12 @@ app.use(express.urlencoded({extended: true}));
 app.use('/files', express.static(path.resolve(__dirname, '..', 'temp')));
 app.use(require('./routes'));
 
-app.listen(enviroment.port || 1000);
+const server = app.listen(enviroment.port || 1000);
+
+const io = require('socket.io')(server)
+
+io.on('connection', socket => {
+    socket.on('connectRoom', box => {
+        socket.join(box);
+    })
+})
