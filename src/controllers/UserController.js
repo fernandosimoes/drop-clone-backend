@@ -1,6 +1,8 @@
 const User = require('../models/User');
 const md5 = require('md5');
 const jwt = require('jsonwebtoken');
+const Actions = require('../config/Actions');
+const jwtConfig = require('../config/jwt.config');
 
 class UserController {
   async store (req, res) {
@@ -22,12 +24,22 @@ class UserController {
       }
     } else {
       try {
-        const user = await User.createIndexes({
+        const user = await User.create({
           nome: req.body.nome,
           email: req.body.email,
           password: md5(req.body.password)
         });
-        res.json(user);
+        const token = await jwt.sign(user, 'batman batman batman', {
+          expiresInMinutes: 1440
+        });
+
+        res.json({
+          success: true,
+          message: Actions.user.success,
+          toke: token
+        });
+
+        // res.json(user);
       } catch (error) {
         res.json(error);
       }
@@ -62,14 +74,17 @@ class UserController {
 
   async login (req, res) {
     // res.json(req.body)
-    // const email = req.body.email;
-    // const pass = req.body.password;
-
-    const user = await User.find({
-      email: "fernando.simoes90@hotmail.com",
-      password: "123456"
+    const user = await User.findOne({
+      email: req.body.email,
+      password: req.body.password
     });
-    res.json(user);
+    const token = await jwt.sign({id: user._id}, jwtConfig.securityToken);
+
+    res.json({
+      status: 200,
+      message: Actions.login.success,
+      token: token
+    });
   }
 }
 

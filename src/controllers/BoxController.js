@@ -18,6 +18,11 @@ class BoxController {
     });
     res.json(boxlist);
   }
+
+  async findAll(req, res) {
+    // const allBox = await Box.findAll();
+    res.send('aqui');
+  }
 }
 
 module.exports = new BoxController();
