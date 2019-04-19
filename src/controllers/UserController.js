@@ -29,9 +29,7 @@ class UserController {
           email: req.body.email,
           password: md5(req.body.password)
         });
-        const token = await jwt.sign(user, 'batman batman batman', {
-          expiresInMinutes: 1440
-        });
+        const token = await jwt.sign(user, 'batman batman batman');
 
         res.json({
           success: true,
@@ -73,18 +71,28 @@ class UserController {
   }
 
   async login (req, res) {
-    // res.json(req.body)
-    const user = await User.findOne({
-      email: req.body.email,
-      password: req.body.password
-    });
-    const token = await jwt.sign({id: user._id}, jwtConfig.securityToken);
 
-    res.json({
-      status: 200,
-      message: Actions.login.success,
-      token: token
-    });
+    try {
+      console.log('try login metode')
+      const user = await User.findOne({
+        email: req.body.email,
+        password: req.body.password
+      });
+
+      const token = await jwt.sign({id: user._id}, jwtConfig.securityToken, {
+        expiresIn: "5m"
+      });
+  
+      res.json({
+        status: 200,
+        message: Actions.login.success,
+        token: token
+      });  
+    } catch (error) {
+      console.log('catch login metode')
+      res.json(error);
+    }
+    
   }
 }
 

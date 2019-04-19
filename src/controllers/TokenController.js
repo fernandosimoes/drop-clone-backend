@@ -9,6 +9,7 @@ class TokenController {
       return decoded
     });
     if (validated.id) {
+      res.send('SUCESSO');
       next();
     } else {
       res.send('error');
