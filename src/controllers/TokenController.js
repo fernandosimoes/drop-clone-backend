@@ -12,7 +12,7 @@ class TokenController {
     if (validated.id) {
       next();
     } else {
-      res.send('error');
+      res.json(validated);
     }
   }
 
