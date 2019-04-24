@@ -6,7 +6,7 @@ const cors = require('cors');
 const enviroment = require('./config/enviroment');
 
 app.use(cors());
-
+mongoose.set('useCreateIndex', true);
 mongoose.connect(
     'mongodb+srv://oministack:oministack@cluster0-gglfc.mongodb.net/oministack?retryWrites=true',
     {

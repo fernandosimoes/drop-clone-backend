@@ -78,7 +78,12 @@ class UserController {
       email: req.body.email,
       password: req.body.password
     });
-    const token = await jwt.sign({id: user._id}, jwtConfig.securityToken);
+
+    const device = req.body.device;
+
+    const token = await jwt.sign({id: user._id, device: "web"}, jwtConfig.securityToken, {
+      expiresIn: jwtConfig.expiresIn
+    });
 
     res.json({
       status: 200,

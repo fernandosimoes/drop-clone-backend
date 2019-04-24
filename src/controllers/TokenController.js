@@ -8,12 +8,18 @@ class TokenController {
       if (err) return err;
       return decoded
     });
+    // incluir diff para condição de chamar new token.
     if (validated.id) {
       next();
     } else {
       res.send('error');
     }
   }
+
+  async newToken(req, res) {
+    // gerar novo token quando prazo para expirar for igual a 1 dia
+  }
+
 }
 
 module.exports = new TokenController();
